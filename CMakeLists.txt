@@ -11,6 +11,13 @@ FetchContent_Declare(imgui
 FetchContent_MakeAvailable(imgui)
 set(imgui_src ${CMAKE_CURRENT_SOURCE_DIR}/build/_deps/imgui-src)
 
+# vtk
+FetchContent_Declare(vtk
+        GIT_REPOSITORY https://github.com/Kitware/VTK.git)
+FetchContent_MakeAvailable(vtk)
+#set(imgui_src ${CMAKE_CURRENT_SOURCE_DIR}/build/_deps/imgui-src)
+
+
 # executable
 set(EXEC_NAME test_imgui)
 add_executable(${EXEC_NAME} main.cpp)
