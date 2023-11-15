@@ -8,10 +8,14 @@
 # 수정 과정
 ## fbx-extract
 * fbx file 에서부터 obj 파일을 추출한다.
-* 오픈 소스로 진행함.
-    * https://github.com/sueda/fbx-extract    
+* blender로 진행함.
+    * https://www.blender.org/
 
 ## tetrahedralization
 * obj 파일로부터 볼륨 메쉬를 추출한다.
 * 오픈 소스로 진행함.
     * https://github.com/wildmeshing/fTetWild
+
+## collision check
+
+## ipc 충돌 구간 밀기
