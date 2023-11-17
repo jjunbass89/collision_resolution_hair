@@ -3,18 +3,17 @@ project(collision_resolution_hair)
 
 set(CMAKE_CXX_STANDARD 20)
 
-include(FetchContent)
+set(GL3W_DIR "C:/RND/gl3w")
+set(VTK_DIR "C:/RND/VTK-9.3.0/build")
 
 # OpenGL
 find_package(OpenGL REQUIRED)
 
 # gl3w
-FetchContent_Declare(gl3w
-    GIT_REPOSITORY https://github.com/skaslev/gl3w)
-FetchContent_MakeAvailable(gl3w)
-set(gl3w_dir ${CMAKE_CURRENT_SOURCE_DIR}/build/_deps/gl3w-src)
-set(gl3w_inc ${gl3w_dir}/include)
-set(gl3w_src ${gl3w_dir}/src/gl3w.c)
+set(gl3w_inc ${GL3W_DIR}/include)
+set(gl3w_src ${GL3W_DIR}/src/gl3w.c)
+
+include(FetchContent)
 
 # glfw
 FetchContent_Declare(glfw
@@ -26,7 +25,6 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 
 # vtk
-set(VTK_DIR "C:/RND/VTK-9.3.0/build")
 find_package(VTK REQUIRED)
 
 # imgui
@@ -64,8 +62,11 @@ target_link_libraries(${EXEC_NAME}
     ${VTK_LIBRARIES}
 )
 
-set_target_properties(${EXEC_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY 
-    ${VTK_DIR}/bin)
+set_target_properties(${EXEC_NAME} 
+    PROPERTIES 
+    RUNTIME_OUTPUT_DIRECTORY 
+    ${VTK_DIR}/bin
+)
 
 vtk_module_autoinit(
     TARGETS ${EXEC_NAME}
