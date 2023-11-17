@@ -39,6 +39,11 @@ set(imgui_backend ${imgui_dir}/backends/imgui_impl_glfw.cpp ${imgui_dir}/backend
 set(imgui_vtk_viewer_dir ${CMAKE_CURRENT_SOURCE_DIR})
 set(imgui_vtk_viewer_src ${imgui_vtk_viewer_dir}/vtkViewer.cpp)
 
+# ImGuiFileDialog
+FetchContent_Declare(imguifiledialog
+    GIT_REPOSITORY https://github.com/aiekick/ImGuiFileDialog.git)
+set(imguifiledialog_dir ${CMAKE_CURRENT_SOURCE_DIR}/build/_deps/imguifiledialog-src)
+
 # executable
 set(EXEC_NAME imgui_vtk)
 add_executable(${EXEC_NAME} 
@@ -47,6 +52,8 @@ add_executable(${EXEC_NAME}
     ${imgui_src}
     ${imgui_backend}
     ${imgui_vtk_viewer_src}
+    ${imgui_dir}/imgui.h
+    ${imguifiledialog_dir}/ImGuiFileDialog.cpp
 )
 
 target_include_directories(${EXEC_NAME} PRIVATE 
@@ -54,6 +61,8 @@ target_include_directories(${EXEC_NAME} PRIVATE
     ${imgui_dir}
     ${imgui_dir}/backends
     ${imgui_vtk_viewer_dir}
+    ${imgui_dir}/imgui.h
+    ${imguifiledialog_dir}
 )
 
 target_link_libraries(${EXEC_NAME}

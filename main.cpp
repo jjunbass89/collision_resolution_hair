@@ -15,6 +15,8 @@
 #include "imgui_impl_opengl3.h"
 #include "vtkViewer.h"
 
+#include "ImGuiFileDialog.h"
+
 // VTK
 #include <vtkSmartPointer.h>
 #include <vtkActor.h>
@@ -63,17 +65,44 @@ int main(int argc, char *argv[])
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+        auto import_obj_dialog = false;
+        if (ImGui::BeginMainMenuBar())
         {
-            ImGui::Begin("Hello, world!");                     // Create a window called "Hello, world!" and append into it.
-            ImGui::Text("This is some useful text.");          // Display some text (you can use a format strings too)
-            ImGui::End();
+            if (ImGui::BeginMenu("Import"))
+            {
+                if (ImGui::MenuItem("OBJ"))
+                {
+                    import_obj_dialog = true;
+                }
+                ImGui::EndMenu();
+            }
+        }
+	
+        ImGui::EndMainMenuBar();
+
+        if (import_obj_dialog)
+        {
+            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Import obj file", ".obj", "C:/RND/example/");
+		}
+
+        if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey"))
+        {
+            // action if OK
+            if (ImGuiFileDialog::Instance()->IsOk())
+            {
+                std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
+                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+            }
+
+            // close
+            ImGuiFileDialog::Instance()->Close();
         }
 
         {
-            ImGui::SetNextWindowSize(ImVec2(280, 300), ImGuiCond_FirstUseEver);
-            ImGui::Begin("Vtk Viewer 1", nullptr, VtkViewer::NoScrollFlags());
-            vtkViewer1.render();
-            ImGui::End();
+            //ImGui::SetNextWindowSize(ImVec2(280, 300), ImGuiCond_FirstUseEver);
+            //ImGui::Begin("Vtk Viewer 1", nullptr, VtkViewer::NoScrollFlags());
+            //vtkViewer1.render();
+            //ImGui::End();
         }
 
         ImGui::Render();

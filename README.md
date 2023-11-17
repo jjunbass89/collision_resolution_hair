@@ -24,6 +24,12 @@
 * CMakeLists.txt 에 3rd party 설정
     * set(GL3W_DIR "${ROOT}/gl3w")
     * set(VTK_DIR "${ROOT}/VTK-9.3.0/build")
+* 빌드
+    * cd collision_resolution_hair
+    * mkdir build
+    * cd build
+    * cmake ..
+    * collision_resolution_hair.sln 빌드.
 
 # 수정전 충돌 상황
 * 머리나 어깨, 등과 머리카락이 충돌하거나 뜨는 것을 확인할 수 있다.
