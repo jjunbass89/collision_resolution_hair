@@ -20,6 +20,8 @@
 // VTK
 #include <vtkSmartPointer.h>
 #include <vtkActor.h>
+#include <vtkOBJReader.h>
+#include <vtkPolyDataMapper.h>
 
 int main(int argc, char *argv[])
 {
@@ -54,7 +56,9 @@ int main(int argc, char *argv[])
     ImGui_ImplOpenGL3_Init("#version 130");
 
     // Initialize VtkViewer objects
-    VtkViewer vtkViewer1;
+    VtkViewer obj_viewer;
+    vtkNew<vtkActor> obj_actor;
+    auto import_obj = false;
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -82,7 +86,7 @@ int main(int argc, char *argv[])
 
         if (import_obj_dialog)
         {
-            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Import obj file", ".obj", "C:/RND/example/");
+            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Import obj file", ".obj", "C:/RND/sample/");
 		}
 
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey"))
@@ -91,18 +95,32 @@ int main(int argc, char *argv[])
             if (ImGuiFileDialog::Instance()->IsOk())
             {
                 std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+                
+                vtkNew<vtkOBJReader> reader;
+                reader->SetFileName(filePathName.c_str());
+                reader->Update();
+
+                vtkNew<vtkPolyDataMapper> mapper;
+                mapper->SetInputConnection(reader->GetOutputPort());
+
+                obj_actor->SetMapper(mapper);
+
+                import_obj = true;
             }
 
             // close
             ImGuiFileDialog::Instance()->Close();
         }
 
+        if (import_obj)
         {
-            //ImGui::SetNextWindowSize(ImVec2(280, 300), ImGuiCond_FirstUseEver);
-            //ImGui::Begin("Vtk Viewer 1", nullptr, VtkViewer::NoScrollFlags());
-            //vtkViewer1.render();
-            //ImGui::End();
+            ImGui::SetNextWindowSize(ImVec2(280, 300), ImGuiCond_FirstUseEver);
+            ImGui::Begin("obj viewer", nullptr, VtkViewer::NoScrollFlags());
+            
+            obj_viewer.addActor(obj_actor);
+            obj_viewer.render();
+            
+            ImGui::End();
         }
 
         ImGui::Render();

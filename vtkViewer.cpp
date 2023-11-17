@@ -147,7 +147,7 @@ void VtkViewer::init(){
 	renderWindow->SwapBuffersOn();
 
 	renderWindow->SetOffScreenRendering(true);
-	//renderWindow->SetFrameBlitModeToNoBlit();
+	renderWindow->SetFrameBlitModeToNoBlit();
 
 	renderWindow->AddRenderer(renderer);
 	renderWindow->SetInteractor(interactor);
