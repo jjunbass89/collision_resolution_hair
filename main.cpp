@@ -1,5 +1,6 @@
 // Standard Library
 #include <iostream>
+#include <vector>
 
 // OpenGL Loader
 // This can be replaced with another loader, e.g. glad, but
@@ -57,7 +58,6 @@ int main(int argc, char *argv[])
 
     // Initialize VtkViewer objects
     VtkViewer obj_viewer;
-    vtkNew<vtkActor> obj_actor;
     auto import_obj = false;
 
     // Main loop
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
         {
             if (ImGui::BeginMenu("Import"))
             {
-                if (ImGui::MenuItem("OBJ"))
+                if (ImGui::MenuItem(".obj"))
                 {
                     import_obj_dialog = true;
                 }
@@ -103,7 +103,9 @@ int main(int argc, char *argv[])
                 vtkNew<vtkPolyDataMapper> mapper;
                 mapper->SetInputConnection(reader->GetOutputPort());
 
+                vtkNew<vtkActor> obj_actor;
                 obj_actor->SetMapper(mapper);
+                obj_viewer.addActor(obj_actor);
 
                 import_obj = true;
             }
@@ -117,7 +119,6 @@ int main(int argc, char *argv[])
             ImGui::SetNextWindowSize(ImVec2(280, 300), ImGuiCond_FirstUseEver);
             ImGui::Begin("obj viewer", nullptr, VtkViewer::NoScrollFlags());
             
-            obj_viewer.addActor(obj_actor);
             obj_viewer.render();
             
             ImGui::End();

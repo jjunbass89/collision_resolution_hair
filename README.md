@@ -39,10 +39,17 @@
     [![video](https://img.youtube.com/vi/ftYdJX8hryk/0.jpg)](https://www.youtube.com/watch?v=ftYdJX8hryk)
 
 # 수정 과정
-## fbx-extract
-* fbx file 에서부터 obj 파일을 추출한다.
+## export obj
+### uasset to fbx
+* 언리얼 엔진5로 진행
+* Mouse right click > Asset actions > Export
+
+### fbx to obj
 * blender로 진행함.
     * https://www.blender.org/
+* File > Import > FBX (.fbx)
+* File > Export > Wavefront (.obj)
+
 
 ## tetrahedralization
 * obj 파일로부터 볼륨 메쉬를 추출한다.
