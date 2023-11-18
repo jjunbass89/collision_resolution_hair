@@ -11,20 +11,19 @@
 #include <GLFW/glfw3.h>
 
 // ImGui + imgui-vtk
+#include "ImGuiFileDialog.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "vtkViewer.h"
-
-#include "ImGuiFileDialog.h"
+#include "imgui_vtk/vtkViewer.h"
 
 // VTK
-#include <vtkSmartPointer.h>
 #include <vtkActor.h>
 #include <vtkOBJReader.h>
 #include <vtkPolyDataMapper.h>
+#include <vtkSmartPointer.h>
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     // Initialize GLFW
     if (!glfwInit())
@@ -33,7 +32,7 @@ int main(int argc, char *argv[])
     }
 
     // Create a GLFW window
-    GLFWwindow *window = glfwCreateWindow(1280, 720, "Dear ImGui VTKViewer Example", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1280, 720, "Dear ImGui VTKViewer Example", NULL, NULL);
     if (window == NULL)
     {
         glfwTerminate();
@@ -42,7 +41,8 @@ int main(int argc, char *argv[])
     glfwMakeContextCurrent(window);
 
     // Initialize OpenGL loader
-    if (gl3wInit() != 0) {
+    if (gl3wInit() != 0)
+    {
         fprintf(stderr, "Failed to initialize OpenGL loader!\n");
         return 1;
     }
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     // Initialize ImGui
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO &io = ImGui::GetIO();
+    ImGuiIO& io = ImGui::GetIO();
     (void)io;
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -81,13 +81,14 @@ int main(int argc, char *argv[])
                 ImGui::EndMenu();
             }
         }
-	
+
         ImGui::EndMainMenuBar();
 
         if (import_obj_dialog)
         {
-            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Import obj file", ".obj", "C:/RND/sample/");
-		}
+            ImGuiFileDialog::Instance()
+                ->OpenDialog("ChooseFileDlgKey", "Import obj file", ".obj", "C:/RND/sample/");
+        }
 
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey"))
         {
@@ -95,7 +96,7 @@ int main(int argc, char *argv[])
             if (ImGuiFileDialog::Instance()->IsOk())
             {
                 std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-                
+
                 vtkNew<vtkOBJReader> reader;
                 reader->SetFileName(filePathName.c_str());
                 reader->Update();
@@ -118,9 +119,9 @@ int main(int argc, char *argv[])
         {
             ImGui::SetNextWindowSize(ImVec2(280, 300), ImGuiCond_FirstUseEver);
             ImGui::Begin("obj viewer", nullptr, VtkViewer::NoScrollFlags());
-            
+
             obj_viewer.render();
-            
+
             ImGui::End();
         }
 
