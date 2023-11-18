@@ -140,7 +140,7 @@ VtkViewer::~VtkViewer()
     renderer        = nullptr;
     interactorStyle = nullptr;
     interactor      = nullptr;
-    renderWindow    = nullptr;
+    renderWindow = nullptr;
 
     glDeleteTextures(1, &tex);
 }
@@ -165,7 +165,7 @@ void VtkViewer::init()
     renderer->SetBackground(DEFAULT_BACKGROUND);
     renderer->SetBackgroundAlpha(DEFAULT_ALPHA);
 
-    interactorStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
+    interactorStyle = vtkSmartPointer<ui::MouseInteractorHighLightActor>::New();
     interactorStyle->SetDefaultRenderer(renderer);
 
     interactor = vtkSmartPointer<vtkGenericRenderWindowInteractor>::New();

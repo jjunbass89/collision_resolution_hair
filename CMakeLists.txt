@@ -8,7 +8,7 @@ set_property(GLOBAL PROPERTY USE_FOLDER ON)
 set(CMAKE_CXX_STANDARD 20)
 
 set(GL3W_DIR "C:/RND/gl3w")
-set(VTK_DIR "C:/RND/VTK-9.3.0/build")
+set(VTK_DIR "C:/RND/VTK/build")
 
 # OpenGL
 find_package(OpenGL REQUIRED)
@@ -56,9 +56,17 @@ set(imgui_vtk_src
 )
 source_group(imgui_vtk FILES ${imgui_vtk_src})
 
+# ui
+set(ui_src 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/ui/MouseInteractorHighLightActor.h 
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/MouseInteractorHighLightActor.cpp 
+)
+source_group(ui FILES ${ui_src})
+
 # executable
 add_executable(${EXEC_NAME} 
     main.cpp 
+    ${ui_src}
     ${imgui_vtk_src}
 
     ${gl3w_src}
