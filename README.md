@@ -12,12 +12,21 @@
 ## vtk
 * vtk 빌드
     * git clone https://github.com/Kitware/VTK
-    * cd VTK-9.3.0
+    * cd VTK
     * mkdir build
     * cd build
     * cmake ..
     * VTK.sln 빌드.
 
+# ftetwild
+* 다운로드
+    * git clone https://github.com/jjunbass89/fTetWild
+* 빌드
+    * https://github.com/wildmeshing/fTetWild 참고        
+* CMakeLists.txt 에 3rd party 설정
+    * set(MPIR_DIR "${USER_PATH}/.conda/pkgs/mpir-3.0.0-he025d50_1002/Library/bin")
+    * set(FTETWILD_DIR "${ROOT}/fTetWild")
+    
 ## collision_resolution_hair
 * 다운로드
     * git clone https://github.com/jjunbass89/collision_resolution_hair
@@ -30,6 +39,7 @@
     * cd build
     * cmake ..
     * collision_resolution_hair.sln 빌드.
+
 
 # 수정전 충돌 상황
 * 머리나 어깨, 등과 머리카락이 충돌하거나 뜨는 것을 확인할 수 있다.

@@ -7,8 +7,10 @@ set_property(GLOBAL PROPERTY USE_FOLDER ON)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(GL3W_DIR "C:/RND/gl3w")
-set(VTK_DIR "C:/RND/VTK/build")
+set(GL3W_DIR "C:/RND/gl3w") # IDLE(python).
+set(VTK_DIR "C:/RND/VTK/build") # weild build path setting.
+set(MPIR_DIR "C:/Users/jjbas/.conda/pkgs/mpir-3.0.0-he025d50_1002/Library/bin") # conda.
+set(FTETWILD_DIR "C:/RND/fTetWild") # mpir.
 
 # OpenGL
 find_package(OpenGL REQUIRED)
@@ -45,6 +47,7 @@ source_group(imgui_backend FILES ${imgui_backend_src})
 # ImGuiFileDialog
 FetchContent_Declare(imguifiledialog
     GIT_REPOSITORY https://github.com/aiekick/ImGuiFileDialog.git)
+FetchContent_Populate(imguifiledialog) # head only.
 set(imguifiledialog_dir ${CMAKE_CURRENT_SOURCE_DIR}/build/_deps/imguifiledialog-src)
 set(imguifiledialog_src ${imguifiledialog_dir}/ImGuiFileDialog.cpp)
 source_group(imguifiledialog FILES ${imguifiledialog_src})
@@ -55,6 +58,8 @@ set(imgui_vtk_src
     ${CMAKE_CURRENT_SOURCE_DIR}/src/imgui_vtk/vtkViewer.cpp
 )
 source_group(imgui_vtk FILES ${imgui_vtk_src})
+
+# fTetWild
 
 # ui
 set(ui_src 
@@ -94,8 +99,9 @@ target_link_libraries(${EXEC_NAME}
 set_target_properties(${EXEC_NAME} 
     PROPERTIES 
     RUNTIME_OUTPUT_DIRECTORY 
-    ${VTK_DIR}/bin
+    ${VTK_DIR}/bin     
 )
+
 vtk_module_autoinit(
     TARGETS ${EXEC_NAME}
     MODULES ${VTK_LIBRARIES}
