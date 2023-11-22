@@ -290,3 +290,8 @@ void VtkViewer::setViewportSize(const ImVec2 newSize)
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     firstRender = false;
 }
+
+void VtkViewer::getSelectedActor(vtkSmartPointer<vtkActor>& actor)
+{
+    interactorStyle->getSelectedActor(actor);
+}

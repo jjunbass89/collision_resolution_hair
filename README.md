@@ -24,7 +24,6 @@
 * 빌드
     * https://github.com/wildmeshing/fTetWild 참고        
 * CMakeLists.txt 에 3rd party 설정
-    * set(MPIR_DIR "${USER_PATH}/.conda/pkgs/mpir-3.0.0-he025d50_1002/Library/bin")
     * set(FTETWILD_DIR "${ROOT}/fTetWild")
     
 ## collision_resolution_hair

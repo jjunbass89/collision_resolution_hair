@@ -23,6 +23,9 @@ class MouseInteractorHighLightActor : public vtkInteractorStyleTrackballCamera
   private:
     vtkActor* LastPickedActor;
     vtkProperty* LastPickedProperty;
+
+  public:
+    void getSelectedActor(vtkSmartPointer<vtkActor>& actor);
 };
 
 } // namespace ui

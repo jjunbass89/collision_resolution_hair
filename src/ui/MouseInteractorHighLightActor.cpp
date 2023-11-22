@@ -54,4 +54,10 @@ void MouseInteractorHighLightActor::OnLeftButtonDown()
     // Forward events.
     vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
 }
+
+void MouseInteractorHighLightActor::getSelectedActor(vtkSmartPointer<vtkActor>& actor)
+{
+    actor = LastPickedActor;
+}
+
 } // namespace ui

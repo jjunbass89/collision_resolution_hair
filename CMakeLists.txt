@@ -59,8 +59,6 @@ set(imgui_vtk_src
 )
 source_group(imgui_vtk FILES ${imgui_vtk_src})
 
-# fTetWild
-
 # ui
 set(ui_src 
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ui/MouseInteractorHighLightActor.h 
@@ -106,3 +104,8 @@ vtk_module_autoinit(
     TARGETS ${EXEC_NAME}
     MODULES ${VTK_LIBRARIES}
 )
+
+# fTetWild
+file(COPY ${MPIR_DIR}/mpir.dll DESTINATION ${FTETWILD_DIR}/build/release)
+set(FTETEWILD_EXE_PATH "${FTETWILD_DIR}/build/release/FloatTetwild_bin.exe")
+target_compile_definitions(${EXEC_NAME} PRIVATE "FTETEWILD_EXE_PATH=\"${FTETEWILD_EXE_PATH}\"")

@@ -59,7 +59,9 @@ int main(int argc, char* argv[])
     // Initialize VtkViewer objects
     VtkViewer obj_viewer;
     auto import_obj = false;
-
+    std::unordered_map<vtkSmartPointer<vtkActor>, std::string> actor_to_path;
+    vtkSmartPointer<vtkActor> selected_actor;
+    char ideal_edge_length[64] = "0.05";
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
@@ -80,6 +82,29 @@ int main(int argc, char* argv[])
                 }
                 ImGui::EndMenu();
             }
+
+            obj_viewer.getSelectedActor(selected_actor);
+            if (selected_actor != nullptr)
+            {
+                if (ImGui::BeginMenu("tetrahedralization"))
+                {
+                    ImGui::InputText(
+                        "ideal edge length",
+                        ideal_edge_length,
+                        IM_ARRAYSIZE(ideal_edge_length));
+
+                    if (ImGui::Button("run"))
+                    {
+                        const auto selected_path = actor_to_path[selected_actor];
+                        std::string fTetWild_cmd_string =
+                            FTETEWILD_EXE_PATH + std::string(" --coarsen -i ") + selected_path +
+                            std::string(" -l ") + ideal_edge_length;
+                        system(fTetWild_cmd_string.c_str());
+                    }
+
+                    ImGui::EndMenu();
+                }
+            }
         }
 
         ImGui::EndMainMenuBar();
@@ -95,10 +120,10 @@ int main(int argc, char* argv[])
             // action if OK
             if (ImGuiFileDialog::Instance()->IsOk())
             {
-                std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
+                const auto filePath = ImGuiFileDialog::Instance()->GetFilePathName();
 
                 vtkNew<vtkOBJReader> reader;
-                reader->SetFileName(filePathName.c_str());
+                reader->SetFileName(filePath.c_str());
                 reader->Update();
 
                 vtkNew<vtkPolyDataMapper> mapper;
@@ -107,6 +132,7 @@ int main(int argc, char* argv[])
                 vtkNew<vtkActor> obj_actor;
                 obj_actor->SetMapper(mapper);
                 obj_viewer.addActor(obj_actor);
+                actor_to_path[obj_actor] = filePath;
 
                 import_obj = true;
             }

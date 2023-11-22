@@ -119,4 +119,7 @@ class VtkViewer
     inline unsigned int getViewportHeight() const { return viewportHeight; }
 
     inline unsigned int getTexture() const { return tex; }
+
+  public:
+    void getSelectedActor(vtkSmartPointer<vtkActor>& actor);
 };
